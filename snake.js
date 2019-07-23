@@ -39,6 +39,7 @@ function direction(event) {
 
     if (changeDirection) return;
     changeDirection = true;
+
     const keyPressed = event.keyCode;
     const Up = my === -10;
     const Down = my === 10;
@@ -47,7 +48,6 @@ function direction(event) {
     if (keyPressed === LEFT_KEY && !Right) {
      mx = -10;
      my = 0;
-     console.log("UP");
     }  if (keyPressed === UP_KEY && !Down) {
      mx = 0;
      my = -10;
