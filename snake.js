@@ -39,11 +39,23 @@ createFood();
 
 document.addEventListener("keydown", direction)
 
+function main() {
+    if (checkGame()) return;
+        setTimeout(function onTick() {
+        changeDirection = false;
+        resetCanvas();
+        displayFood();
+        moveSnake();
+        drawSnake();
+        main();
+    }, game_speed)
+};
+
 function direction(event) {
-    const LEFT_KEY = 37;
-    const RIGHT_KEY = 39;
-    const UP_KEY = 38;
-    const DOWN_KEY = 40;
+    const left_key = 37;
+    const right_key = 39;
+    const up_key = 38;
+    const down_key = 40;
 
     if (changeDirection) return;
     changeDirection = true;
@@ -53,16 +65,16 @@ function direction(event) {
     const Down = my === 10;
     const Right = mx === 10;
     const Left = mx === -10;  
-    if (keyPressed === LEFT_KEY && !Right) {
+    if (keyPressed === left_key && !Right) {
      mx = -10;
      my = 0;
-    }  if (keyPressed === UP_KEY && !Down) {
+    }  if (keyPressed === up_key && !Down) {
      mx = 0;
      my = -10;
-    }  if (keyPressed === RIGHT_KEY && !Left) {
+    }  if (keyPressed === right_key && !Left) {
      mx = 10;
      my = 0;
-    }  if (keyPressed === DOWN_KEY && !Up) {
+    }  if (keyPressed === down_key && !Up) {
      mx = 0;
      my = 10;
     }
@@ -75,6 +87,7 @@ function resetCanvas() {
     ctx.strokeRect(0, 0, canvas.width, canvas.height);
 };
 
+//충돌 체크
 function checkGame() {
     for (let i = 4; i < snake.length; i++) {
       if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) return true
@@ -84,7 +97,7 @@ function checkGame() {
     const hitToptWall = snake[0].y < 10;
     const hitBottomWall = snake[0].y > canvas.height - 20;
     return hitLeftWall || hitRightWall || hitToptWall || hitBottomWall
-  }
+};
 
 function moveSnake() {
     const head= {x: snake[0].x + mx, y: snake[0].y + my};
@@ -124,16 +137,6 @@ function displayFood() {
     ctx.strokeRect(foodX, foodY, 10, 10);
 };
 
-function main() {
-    if (checkGame()) return;
-        setTimeout(function onTick() {
-        changeDirection = false;
-        resetCanvas();
-        displayFood();
-        moveSnake();
-        drawSnake();
-        main();
-    }, game_speed)
-};
+
 
 
